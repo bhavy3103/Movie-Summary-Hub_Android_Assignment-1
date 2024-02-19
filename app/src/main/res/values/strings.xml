@@ -44,4 +44,10 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string-array name="spinnerlist">
+        <item>Select Filter</item>
+        <item>Title</item>
+        <item>Rating</item>
+    </string-array>
+
 </resources>
