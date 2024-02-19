@@ -6,6 +6,7 @@ public class Movie {
     private Double rating;
 
     public Movie(String title,String poster,String overview,Double rating){
+//      poster = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQuuqXX2tr6lXChezJU5w-fPf4GrjKxfSKSw&usqp=CAU";
         this.title = title;
         this.poster = poster;
         this.overview = overview;

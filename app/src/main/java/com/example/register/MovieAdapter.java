@@ -38,8 +38,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
 
-        final Movie movie = movieList.get(position);
+         Movie movie = movieList.get(position);
         holder.rating.setText(movie.getRating().toString());
+
         holder.title.setText(movie.getTitle());
         holder.overview.setText(movie.getOverview());
         Glide.with(context).load(movie.getPoster()).into(holder.imageView);

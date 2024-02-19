@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -44,19 +45,21 @@ public class HomeActivity extends AppCompatActivity {
 
     private void fetchMovies() {
 
-        String url = "https://www.json-generator.com/api/json/get/cfsXpFGwwO?indent=2";
+        String url = "https://dummyapi.online/api/movies";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        for (int i = 0 ; i < response.length() ; i ++){
+                        Log.d("name","This is working");
+
+                        for (int i = 0 ; i < response.length() ; i++){
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String title = jsonObject.getString("title");
-                                String overview = jsonObject.getString("overview");
-                                String poster = jsonObject.getString("poster");
+                                String title = jsonObject.getString("movie");
+                                String overview = jsonObject.getString("imdb_url");
+                                String poster = jsonObject.getString("image");
                                 Double rating = jsonObject.getDouble("rating");
 
                                 Movie movie = new Movie(title , poster , overview , rating);
