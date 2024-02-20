@@ -42,7 +42,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.rating.setText(movie.getRating().toString());
 
         holder.title.setText(movie.getTitle());
-        holder.overview.setText(movie.getOverview());
+        holder.overview.setText(movie.getType());
         Glide.with(context).load(movie.getPoster()).into(holder.imageView);
 
         holder.constraintLayout.setOnClickListener(v -> {
@@ -50,12 +50,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
             Bundle bundle = new Bundle();
             bundle.putString("title" , movie.getTitle());
-            bundle.putString("overview" , movie.getOverview());
+            bundle.putString("overview" , movie.getType());
             bundle.putString("poster" , movie.getPoster());
             bundle.putDouble("rating" , movie.getRating());
 
             intent.putExtras(bundle);
-
             context.startActivity(intent);
         });
 

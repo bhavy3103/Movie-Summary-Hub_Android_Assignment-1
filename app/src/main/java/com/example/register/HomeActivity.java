@@ -24,13 +24,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     Spinner sort_spinner;
     private RecyclerView recyclerView;
     private RequestQueue requestQueue;
     private List<Movie> movieList;
+    private List<Movie> dummy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +44,20 @@ public class HomeActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         sort_spinner.setAdapter(adapter);
 
+
+
         sort_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String data = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(HomeActivity.this, data, Toast.LENGTH_SHORT).show();
+                String pokemon = adapterView.getItemAtPosition(position).toString();
+                dummy = movieList.stream()
+                        .filter(data -> data.getType().equals(pokemon))
+                        .collect(Collectors.toList());
+
+                MovieAdapter adapter = new MovieAdapter(HomeActivity.this, dummy);
+                recyclerView.setAdapter(adapter);
+
+                Toast.makeText(HomeActivity.this, pokemon, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -66,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void fetchMovies() {
-        String url = "https://dummyapi.online/api/movies";
+        String url = "https://dummyapi.online/api/pokemon";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -77,10 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String title = jsonObject.getString("movie");
-                                String overview = jsonObject.getString("imdb_url");
-                                String poster = jsonObject.getString("image");
-                                Double rating = jsonObject.getDouble("rating");
+                                String title = jsonObject.getString("pokemon");
+                                String overview = jsonObject.getString("type");
+                                String poster = jsonObject.getString("image_url");
+                                Double rating = jsonObject.getDouble("hitpoints");
 
                                 Movie movie = new Movie(title, poster, overview, rating);
                                 movieList.add(movie);
@@ -100,5 +111,15 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         requestQueue.add(jsonArrayRequest);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

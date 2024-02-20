@@ -21,7 +21,7 @@ public class Movie {
         return poster;
     }
 
-    public String getOverview() {
+    public String getType() {
         return overview;
     }
 
