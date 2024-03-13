@@ -44,8 +44,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         sort_spinner.setAdapter(adapter);
 
-
-
         sort_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -77,7 +75,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void fetchMovies() {
-        String url = "https://dummyapi.online/api/pokemon";
+//        String url = "https://dummyapi.online/api/pokemon";
+//        String url = "http://192.168.45.43/mad_api/myapi.php";
+//        String url = "http://localhost/mad_api/myapi.php";
+        String url = "http://192.168.154.222/MAD_Project/backend/api/getAllUsers.php";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -88,10 +89,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String title = jsonObject.getString("pokemon");
-                                String overview = jsonObject.getString("type");
-                                String poster = jsonObject.getString("image_url");
-                                Double rating = jsonObject.getDouble("hitpoints");
+                                String title = jsonObject.getString("username");
+                                String overview = jsonObject.getString("bio");
+                                String poster = jsonObject.getString("profile_photo");
+                                Double rating = jsonObject.getDouble("posts");
 
                                 Movie movie = new Movie(title, poster, overview, rating);
                                 movieList.add(movie);
